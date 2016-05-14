@@ -1,0 +1,89 @@
+From 7cef8f32460859c655340fd48f93688869de20c7 Mon Sep 17 00:00:00 2001
+From: Scott Talbert <swt@techie.net>
+Date: Thu, 25 Feb 2016 22:52:37 -0500
+Subject: [PATCH] Unbundle sip
+
+---
+ etg/dataview.py | 4 ++--
+ etg/grid.py     | 4 ++--
+ etg/sizer.py    | 4 ++--
+ etg/window.py   | 4 ++--
+ wscript         | 2 +-
+ 5 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/etg/dataview.py b/etg/dataview.py
+index d028482..a0939da 100644
+--- a/etg/dataview.py
++++ b/etg/dataview.py
+@@ -343,8 +343,8 @@ def run():
+             is reference counted so it can be shared with other views.
+             """,
+         body="""\
+-            import wx.siplib
+-            wasPyOwned = wx.siplib.ispyowned(model)
++            import sip
++            wasPyOwned = sip.ispyowned(model)
+             self._AssociateModel(model)
+             # Ownership of the python object has just been transferred to 
+             # C++, so DecRef the C++ instance associated with this python 
+diff --git a/etg/grid.py b/etg/grid.py
+index 259b70d..867fe35 100644
+--- a/etg/grid.py
++++ b/etg/grid.py
+@@ -354,8 +354,8 @@ def run():
+         body="""\
+             val = self._SetTable(table, takeOwnership, selmode)
+             if takeOwnership:
+-                import wx.siplib
+-                wx.siplib.transferto(table, self)
++                import sip
++                sip.transferto(table, self)
+             return val
+         """)
+     
+diff --git a/etg/sizer.py b/etg/sizer.py
+index 54b35fe..e284869 100644
+--- a/etg/sizer.py
++++ b/etg/sizer.py
+@@ -147,8 +147,8 @@ def run():
+             "    if theSizer:\n"
+             "        doSomething()",
+         body="""\
+-        import wx.siplib
+-        return not wx.siplib.isdeleted(self)
++        import sip
++        return not sip.isdeleted(self)
+         """)
+     c.addPyCode('Sizer.__bool__ = Sizer.__nonzero__') # For Python 3
+ 
+diff --git a/etg/window.py b/etg/window.py
+index b6021d7..9c467d9 100644
+--- a/etg/window.py
++++ b/etg/window.py
+@@ -173,8 +173,8 @@ def run():
+             "    if theWindow:\n"
+             "        doSomething()",
+         body="""\
+-        import wx.siplib
+-        return not wx.siplib.isdeleted(self)
++        import sip
++        return not sip.isdeleted(self)
+         """)
+     c.addPyCode('Window.__bool__ = Window.__nonzero__') # For Python 3
+ 
+diff --git a/wscript b/wscript
+index 83aba8a..ca601f9 100644
+--- a/wscript
++++ b/wscript
+@@ -95,7 +95,7 @@ def configure(conf):
+     conf.env.debug = conf.options.debug
+ 
+     # Ensure that the headers in siplib and Phoenix's src dir can be found
+-    conf.env.INCLUDES_WXPY = ['sip/siplib', 'src']
++    conf.env.INCLUDES_WXPY = ['src']
+ 
+     if isWindows:
+         # Windows/MSVC specific stuff
+-- 
+2.5.0
+
