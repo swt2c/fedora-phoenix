@@ -2,7 +2,8 @@
 %global py2_builddir python2
 %global py3_builddir python3
 %global tarname wxPython_Phoenix
-%global snapshot_version dev2022+b85bcd3
+%global snapshot_version dev2295+a108359
+%global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
 wxPython-Phoenix is a is a new implementation of wxPython focused on improving\
@@ -22,14 +23,21 @@ URL:            http://wiki.wxpython.org/ProjectPhoenix
 Source0:        http://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version}.%{snapshot_version}.tar.gz
 Patch0:         unbundle-sip.patch
 Patch1:         remove-version-warning.patch
+Patch2:         revert-glcanvas-header-changes.patch
 
+BuildRequires:  doxygen
 BuildRequires:  waf
 BuildRequires:  wxGTK3-devel
-BuildRequires:  wxGTK3-xmldocs
 # For tests
+%if 0%{?with_tests}
 BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  numpy python3-numpy
+%if 0%{?fedora} < 24
 BuildRequires:  python-PyPDF2 python3-PyPDF2
+%else
+BuildRequires:  python2-PyPDF2 python3-PyPDF2
+%endif
+%endif
 
 %description %{desc}
 
@@ -38,7 +46,9 @@ Summary:        ${sum}
 %{?python_provide:%python_provide python2-%{pkgname}}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
+BuildRequires:  python2-six
 BuildRequires:  sip-devel
+Requires:       python2-six
 Requires:       sip
 
 %description -n python2-%{pkgname} %{desc}
@@ -49,7 +59,9 @@ Summary:        %{sum}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
 BuildRequires:  python3-sip-devel
+BuildRequires:  python3-six
 Requires:       python3-sip
+Requires:       python3-six
 
 %description -n python3-%{pkgname} %{desc}
 
@@ -63,25 +75,25 @@ Documentation, samples and demo application for wxPython.
 
 
 %prep
-#%autosetup -p1 -n %{tarname}-%{version}.%{snapshot_version}
 %setup -c -q
 
 mv %{tarname}-%{version}.%{snapshot_version} %{py2_builddir}
 pushd %{py2_builddir}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i -e "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-3.0'|" build.py
-sed -i -e "s|os.path.join(self.WXDIR, 'docs/doxygen/out/xml')|'/usr/share/doc/wxGTK3-xmldocs'|" buildtools/config.py
+rm -rf sip/siplib
 popd
 cp -a %{py2_builddir} %{py3_builddir}
 
 
 %build
 pushd %{py2_builddir}
-SIP=%{_bindir}/sip %{__python2} -u build.py touch etg --nodoc sip build_py --use_syswx --gtk3 bdist_egg
+DOXYGEN=%{_bindir}/doxygen SIP=%{_bindir}/sip %{__python2} -u build.py dox touch etg --nodoc sip build_py --use_syswx --gtk3 bdist_egg
 popd
 pushd %{py3_builddir}
-SIP=%{_bindir}/python3-sip %{__python3} -u build.py touch etg --nodoc sip build_py --use_syswx --gtk3
+DOXYGEN=%{_bindir}/doxygen SIP=%{_bindir}/python3-sip %{__python3} -u build.py dox touch etg --nodoc sip build_py --use_syswx --gtk3
 popd
 
 
@@ -97,12 +109,14 @@ rm -f %{buildroot}%{_bindir}/*
 
 
 %check
+%if 0%{?with_tests}
 pushd %{py2_builddir}
 xvfb-run -a %{__python2} build.py test --verbose || true
 popd
 pushd %{py3_builddir}
 xvfb-run -a %{__python3} build.py test --verbose || true
 popd
+%endif
 
 
 %files -n python2-%{pkgname}
@@ -118,5 +132,5 @@ popd
 
 
 %changelog
-* Fri May 13 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2022+b85bcd3
+* Sat Jul 30 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2295+a108359
 - Initial packaging
