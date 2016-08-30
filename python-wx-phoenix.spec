@@ -2,7 +2,7 @@
 %global py2_builddir python2
 %global py3_builddir python3
 %global tarname wxPython_Phoenix
-%global snapshot_version dev2454+53f3c37
+%global snapshot_version dev2472+78ae39a
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -134,6 +134,9 @@ popd
 
 
 %changelog
+* Tue Aug 30 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2472+78ae39a
+- Update to dev2472+78ae39a
+
 * Sun Aug 21 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2454+53f3c37
 - Update to dev2454+53f3c37
 
