@@ -2,7 +2,7 @@
 %global py2_builddir python2
 %global py3_builddir python3
 %global tarname wxPython_Phoenix
-%global snapshot_version dev2295+a108359
+%global snapshot_version dev2454+53f3c37
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -24,6 +24,7 @@ Source0:        http://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version
 Patch0:         unbundle-sip.patch
 Patch1:         remove-version-warning.patch
 Patch2:         revert-glcanvas-header-changes.patch
+Patch3:         revert-listevent-header-changes.patch
 
 BuildRequires:  doxygen
 BuildRequires:  waf
@@ -82,6 +83,7 @@ pushd %{py2_builddir}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i -e "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-3.0'|" build.py
 rm -rf sip/siplib
 popd
@@ -132,5 +134,8 @@ popd
 
 
 %changelog
+* Sun Aug 21 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2454+53f3c37
+- Update to dev2454+53f3c37
+
 * Sat Jul 30 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2295+a108359
 - Initial packaging
