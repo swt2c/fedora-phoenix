@@ -2,7 +2,7 @@
 %global py2_builddir python2
 %global py3_builddir python3
 %global tarname wxPython_Phoenix
-%global snapshot_version dev2472+78ae39a
+%global snapshot_version dev2875+9b743cf
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -15,7 +15,7 @@ specific code.
 
 Name:           python-wx-phoenix
 Version:        3.0.3
-Release:        0.1.%{snapshot_version}%{?dist}
+Release:        0.11.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
@@ -25,6 +25,7 @@ Patch0:         unbundle-sip.patch
 Patch1:         remove-version-warning.patch
 Patch2:         revert-glcanvas-header-changes.patch
 Patch3:         revert-listevent-header-changes.patch
+Patch4:         revert-propdlg-header-changes.patch
 
 BuildRequires:  doxygen
 BuildRequires:  waf
@@ -48,9 +49,9 @@ Summary:        ${sum}
 BuildRequires:  python2-devel
 BuildRequires:  python2-setuptools
 BuildRequires:  python2-six
-BuildRequires:  sip-devel
+BuildRequires:  sip-devel >= 4.19.1
 Requires:       python2-six
-Requires:       sip
+Requires:       sip >= 4.19.1
 
 %description -n python2-%{pkgname} %{desc}
 
@@ -59,9 +60,9 @@ Summary:        %{sum}
 %{?python_provide:%python_provide python3-%{pkgname}}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-sip-devel
+BuildRequires:  python3-sip-devel >= 4.19.1
 BuildRequires:  python3-six
-Requires:       python3-sip
+Requires:       python3-sip >= 4.19.1
 Requires:       python3-six
 
 %description -n python3-%{pkgname} %{desc}
@@ -84,6 +85,7 @@ pushd %{py2_builddir}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 sed -i -e "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-3.0'|" build.py
 rm -rf sip/siplib
 popd
@@ -134,6 +136,36 @@ popd
 
 
 %changelog
+* Sun Mar 26 2017 Scott Talbert <swt@techie.net> - 3.0.3-0.11.dev2875+9b743cf
+- Update to dev2875+9b743cf
+
+* Sat Feb 18 2017 Scott Talbert <swt@techie.net> - 3.0.3-0.10.dev2828+929a8af
+- Update to dev2828+929a8af
+
+* Sun Feb 05 2017 Scott Talbert <swt@techie.net> - 3.0.3-0.9.dev2768+b0c24a5
+- Update to dev2768+b0c24a5
+
+* Fri Feb 03 2017 Scott Talbert <swt@techie.net> - 3.0.3-0.8.dev2747+22cbbb8
+- rebuilt
+
+* Sat Dec 10 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.7.dev2747+22cbbb8
+- Update to dev2747+22cbbb8
+
+* Tue Dec 06 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.6.dev2733+2de746b
+- Update to dev2733+2de746b
+
+* Mon Dec 05 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.5.dev2680+55dda48
+- One more patch to fix wxMemoryFSHandler
+
+* Mon Nov 14 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.4.dev2680+55dda48
+- Update to dev2680+55dda48
+
+* Thu Oct 06 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.3.dev2472+78ae39a
+- Add another patch to fix wxMemoryFSHandler
+
+* Mon Oct 03 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.2.dev2472+78ae39a
+- Add patch to fix wxMemoryFSHandler
+
 * Tue Aug 30 2016 Scott Talbert <swt@techie.net> - 3.0.3-0.1.dev2472+78ae39a
 - Update to dev2472+78ae39a
 

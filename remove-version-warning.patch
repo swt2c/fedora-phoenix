@@ -1,4 +1,4 @@
-From b27816f82fae1a505e9bb2a2d3df2c7f9e0ed360 Mon Sep 17 00:00:00 2001
+From d02fbc9ecd41f221acb66bccb2f0cef52e511638 Mon Sep 17 00:00:00 2001
 From: Scott Talbert <swt@techie.net>
 Date: Sun, 3 Apr 2016 10:01:44 -0400
 Subject: [PATCH] Remove RELEASE_VERSION mismatch warning
@@ -8,7 +8,7 @@ Subject: [PATCH] Remove RELEASE_VERSION mismatch warning
  1 file changed, 3 deletions(-)
 
 diff --git a/src/core_ex.py b/src/core_ex.py
-index 26f9045..d581623 100644
+index efb2fed..9d1f09a 100644
 --- a/src/core_ex.py
 +++ b/src/core_ex.py
 @@ -8,9 +8,6 @@ if 'wxEVT_NULL' in dir():
@@ -18,9 +18,9 @@ index 26f9045..d581623 100644
 -    if RELEASE_NUMBER != wx._core.RELEASE_NUMBER:
 -        import warnings
 -        warnings.warn("wxPython/wxWidgets release number mismatch")
-        
+ 
      # Register a function to be called when Python terminates that will clean
      # up and release all system resources that wxWidgets allocated.
 -- 
-2.5.5
+2.7.4
 
