@@ -1,8 +1,9 @@
 %global pkgname wx-phoenix-gtk3
 %global py2_builddir python2
 %global py3_builddir python3
-%global tarname wxPython_Phoenix
-%global snapshot_version dev2875+9b743cf
+%global tarname wxPython
+%global alpha_version a4
+%global snapshot_version dev3185+56e6806
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -14,18 +15,14 @@ systems with a native look and feel and requiring very little (if any) platform\
 specific code.
 
 Name:           python-wx-phoenix
-Version:        3.0.3
-Release:        0.11.%{snapshot_version}%{?dist}
+Version:        4.0.0
+Release:        0.1.%{alpha_version}.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
 URL:            http://wiki.wxpython.org/ProjectPhoenix
-Source0:        http://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version}.%{snapshot_version}.tar.gz
+Source0:        https://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version}%{alpha_version}.%{snapshot_version}.tar.gz
 Patch0:         unbundle-sip.patch
-Patch1:         remove-version-warning.patch
-Patch2:         revert-glcanvas-header-changes.patch
-Patch3:         revert-listevent-header-changes.patch
-Patch4:         revert-propdlg-header-changes.patch
 
 BuildRequires:  doxygen
 BuildRequires:  waf
@@ -79,13 +76,9 @@ Documentation, samples and demo application for wxPython.
 %prep
 %setup -c -q
 
-mv %{tarname}-%{version}.%{snapshot_version} %{py2_builddir}
+mv %{tarname}-%{version}%{alpha_version}.%{snapshot_version} %{py2_builddir}
 pushd %{py2_builddir}
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 sed -i -e "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-3.0'|" build.py
 rm -rf sip/siplib
 popd
@@ -136,6 +129,9 @@ popd
 
 
 %changelog
+* Fri Jul 07 2017 Scott Talbert <swt@techie.net> - 4.0.0-0.1.a4.dev3185+56e6806
+- Update to dev3185+56e6806
+
 * Sun Mar 26 2017 Scott Talbert <swt@techie.net> - 3.0.3-0.11.dev2875+9b743cf
 - Update to dev2875+9b743cf
 
