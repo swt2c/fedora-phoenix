@@ -3,7 +3,7 @@
 %global py3_builddir python3
 %global tarname wxPython
 %global alpha_version a4
-%global snapshot_version dev3185+56e6806
+%global snapshot_version dev3225+172bd50
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -16,7 +16,7 @@ specific code.
 
 Name:           python-wx-phoenix
 Version:        4.0.0
-Release:        0.1.%{alpha_version}.%{snapshot_version}%{?dist}
+Release:        0.2.%{alpha_version}.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
@@ -129,6 +129,9 @@ popd
 
 
 %changelog
+* Tue Jul 25 2017 Scott Talbert <swt@techie.net> - 4.0.0-0.2.a4.dev3225+172bd50
+- Update to dev3225+172bd50
+
 * Fri Jul 07 2017 Scott Talbert <swt@techie.net> - 4.0.0-0.1.a4.dev3185+56e6806
 - Update to dev3185+56e6806
 
