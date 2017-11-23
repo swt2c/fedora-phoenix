@@ -2,8 +2,8 @@
 %global py2_builddir python2
 %global py3_builddir python3
 %global tarname wxPython
-%global alpha_version a4
-%global snapshot_version dev3225+172bd50
+%global beta_version b2
+%global snapshot_version dev3324+4ef6bc8
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -16,12 +16,12 @@ specific code.
 
 Name:           python-wx-phoenix
 Version:        4.0.0
-Release:        0.2.%{alpha_version}.%{snapshot_version}%{?dist}
+Release:        0.3.%{beta_version}.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
 URL:            http://wiki.wxpython.org/ProjectPhoenix
-Source0:        https://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version}%{alpha_version}.%{snapshot_version}.tar.gz
+Source0:        https://wxpython.org/Phoenix/snapshot-builds/%{tarname}-%{version}%{beta_version}.%{snapshot_version}.tar.gz
 Patch0:         unbundle-sip.patch
 
 BuildRequires:  doxygen
@@ -76,7 +76,7 @@ Documentation, samples and demo application for wxPython.
 %prep
 %setup -c -q
 
-mv %{tarname}-%{version}%{alpha_version}.%{snapshot_version} %{py2_builddir}
+mv %{tarname}-%{version}%{beta_version}.%{snapshot_version} %{py2_builddir}
 pushd %{py2_builddir}
 %patch0 -p1
 sed -i -e "s|WX_CONFIG = 'wx-config'|WX_CONFIG = 'wx-config-3.0'|" build.py
@@ -129,6 +129,9 @@ popd
 
 
 %changelog
+* Thu Aug 31 2017 Scott Talbert <swt@techie.net> - 4.0.0-0.3.b2.dev3324+4ef6bc8
+- Update to dev3324+4ef6bc8
+
 * Tue Jul 25 2017 Scott Talbert <swt@techie.net> - 4.0.0-0.2.a4.dev3225+172bd50
 - Update to dev3225+172bd50
 
