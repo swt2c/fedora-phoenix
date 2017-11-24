@@ -1,4 +1,4 @@
-From fd555b6017a30a5deb13c8247c9e6d366a5906b7 Mon Sep 17 00:00:00 2001
+From 472df4415bf66653b9b5d14e8bbbd984217878f9 Mon Sep 17 00:00:00 2001
 From: Scott Talbert <swt@techie.net>
 Date: Tue, 17 May 2016 23:52:32 -0400
 Subject: [PATCH] Unbundle sip
@@ -8,14 +8,14 @@ Subject: [PATCH] Unbundle sip
  etg/grid.py     |  4 ++--
  etg/sizer.py    |  4 ++--
  etg/window.py   |  4 ++--
- wscript         | 19 +------------------
- 5 files changed, 9 insertions(+), 26 deletions(-)
+ wscript         | 20 +-------------------
+ 5 files changed, 9 insertions(+), 27 deletions(-)
 
 diff --git a/etg/dataview.py b/etg/dataview.py
-index 0ef7b34..5beda37 100644
+index c0be8351..0a877a3f 100644
 --- a/etg/dataview.py
 +++ b/etg/dataview.py
-@@ -364,8 +364,8 @@ def run():
+@@ -374,8 +374,8 @@ def run():
              is reference counted so it can be shared with other views.
              """,
          body="""\
@@ -27,10 +27,10 @@ index 0ef7b34..5beda37 100644
              # Ownership of the python object has just been transferred to
              # C++, so DecRef the C++ instance associated with this python
 diff --git a/etg/grid.py b/etg/grid.py
-index 94e6c57..54e533e 100644
+index c4e19109..f4c7f2b5 100644
 --- a/etg/grid.py
 +++ b/etg/grid.py
-@@ -444,8 +444,8 @@ def run():
+@@ -445,8 +445,8 @@ def run():
          body="""\
              val = self._SetTable(table, takeOwnership, selmode)
              if takeOwnership:
@@ -42,7 +42,7 @@ index 94e6c57..54e533e 100644
          """)
  
 diff --git a/etg/sizer.py b/etg/sizer.py
-index a5533ea..1335987 100644
+index a5533eab..1335987f 100644
 --- a/etg/sizer.py
 +++ b/etg/sizer.py
 @@ -148,8 +148,8 @@ def run():
@@ -57,7 +57,7 @@ index a5533ea..1335987 100644
      c.addPyCode('Sizer.__bool__ = Sizer.__nonzero__') # For Python 3
  
 diff --git a/etg/window.py b/etg/window.py
-index 007d70b..9235efe 100644
+index 25701eed..f85c52f2 100644
 --- a/etg/window.py
 +++ b/etg/window.py
 @@ -178,8 +178,8 @@ def run():
@@ -72,10 +72,10 @@ index 007d70b..9235efe 100644
      c.addPyCode('Window.__bool__ = Window.__nonzero__') # For Python 3
  
 diff --git a/wscript b/wscript
-index c888e05..4f5a101 100644
+index b242902d..5a113143 100644
 --- a/wscript
 +++ b/wscript
-@@ -94,7 +94,7 @@ def configure(conf):
+@@ -96,7 +96,7 @@ def configure(conf):
      conf.env.msvc_relwithdebug = conf.options.msvc_relwithdebug
  
      # Ensure that the headers in siplib and Phoenix's src dir can be found
@@ -84,7 +84,7 @@ index c888e05..4f5a101 100644
  
      if isWindows:
          # Windows/MSVC specific stuff
-@@ -500,23 +500,6 @@ def build(bld):
+@@ -505,24 +505,6 @@ def build(bld):
  
  
      # Create the build tasks for each of our extension modules.
@@ -96,6 +96,7 @@ index c888e05..4f5a101 100644
 -                    'sip/siplib/array.c',
 -                    'sip/siplib/bool.cpp',
 -                    'sip/siplib/descriptors.c',
+-                    'sip/siplib/int_convertors.c',
 -                    'sip/siplib/objmap.c',
 -                    'sip/siplib/qtlib.c',
 -                    'sip/siplib/siplib.c',
@@ -109,5 +110,5 @@ index c888e05..4f5a101 100644
      # Add build rules for each of our ETG generated extension modules
      makeETGRule(bld, 'etg/_core.py',       '_core',      'WX')
 -- 
-2.9.4
+2.14.3
 
