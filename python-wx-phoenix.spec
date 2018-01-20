@@ -3,7 +3,7 @@
 %global py3_builddir python3
 %global tarname wxPython
 %global rc_version rc1
-%global snapshot_version dev3549+ea4969d
+%global snapshot_version dev3607+c1a0a4d
 %global with_tests 0
 %global sum New implementation of wxPython, a GUI toolkit for Python
 %global desc \
@@ -16,7 +16,7 @@ specific code.
 
 Name:           python-wx-phoenix
 Version:        4.0.0
-Release:        0.5.%{rc_version}.%{snapshot_version}%{?dist}
+Release:        0.6.%{rc_version}.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
@@ -31,11 +31,7 @@ BuildRequires:  wxGTK3-devel
 %if 0%{?with_tests}
 BuildRequires:  xorg-x11-server-Xvfb
 BuildRequires:  numpy python3-numpy
-%if 0%{?fedora} < 24
-BuildRequires:  python-PyPDF2 python3-PyPDF2
-%else
 BuildRequires:  python2-PyPDF2 python3-PyPDF2
-%endif
 %endif
 
 %description %{desc}
@@ -129,6 +125,9 @@ popd
 
 
 %changelog
+* Sat Jan 20 2018 Scott Talbert <swt@techie.net> - 4.0.0-0.6.rc1.dev3607+c1a0a4d
+- Update to dev3607+c1a0a4d
+
 * Mon Jan 08 2018 Scott Talbert <swt@techie.net> - 4.0.0-0.5.rc1.dev3549+ea4969d
 - Update to dev3549+ea4969d
 
