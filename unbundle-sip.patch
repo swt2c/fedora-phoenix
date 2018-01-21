@@ -1,15 +1,16 @@
-From 472df4415bf66653b9b5d14e8bbbd984217878f9 Mon Sep 17 00:00:00 2001
+From 3f9dc246ae660318d1e8b03fa7c410dfdc2a520e Mon Sep 17 00:00:00 2001
 From: Scott Talbert <swt@techie.net>
-Date: Tue, 17 May 2016 23:52:32 -0400
+Date: Sat, 20 Jan 2018 17:05:11 -0500
 Subject: [PATCH] Unbundle sip
 
 ---
- etg/dataview.py |  4 ++--
- etg/grid.py     |  4 ++--
- etg/sizer.py    |  4 ++--
- etg/window.py   |  4 ++--
- wscript         | 20 +-------------------
- 5 files changed, 9 insertions(+), 27 deletions(-)
+ etg/dataview.py              |  4 ++--
+ etg/grid.py                  |  4 ++--
+ etg/sizer.py                 |  4 ++--
+ etg/window.py                |  4 ++--
+ wscript                      | 20 +-------------------
+ wx/lib/gizmos/dynamicsash.py |  6 +++---
+ 6 files changed, 12 insertions(+), 30 deletions(-)
 
 diff --git a/etg/dataview.py b/etg/dataview.py
 index c0be8351..0a877a3f 100644
@@ -27,7 +28,7 @@ index c0be8351..0a877a3f 100644
              # Ownership of the python object has just been transferred to
              # C++, so DecRef the C++ instance associated with this python
 diff --git a/etg/grid.py b/etg/grid.py
-index c4e19109..f4c7f2b5 100644
+index 47c1e0ce..097e9c86 100644
 --- a/etg/grid.py
 +++ b/etg/grid.py
 @@ -445,8 +445,8 @@ def run():
@@ -57,7 +58,7 @@ index a5533eab..1335987f 100644
      c.addPyCode('Sizer.__bool__ = Sizer.__nonzero__') # For Python 3
  
 diff --git a/etg/window.py b/etg/window.py
-index 25701eed..f85c52f2 100644
+index be481ae6..a1bb0f7e 100644
 --- a/etg/window.py
 +++ b/etg/window.py
 @@ -178,8 +178,8 @@ def run():
@@ -72,7 +73,7 @@ index 25701eed..f85c52f2 100644
      c.addPyCode('Window.__bool__ = Window.__nonzero__') # For Python 3
  
 diff --git a/wscript b/wscript
-index b242902d..5a113143 100644
+index d051ebbc..9a3c26da 100644
 --- a/wscript
 +++ b/wscript
 @@ -96,7 +96,7 @@ def configure(conf):
@@ -84,7 +85,7 @@ index b242902d..5a113143 100644
  
      if isWindows:
          # Windows/MSVC specific stuff
-@@ -505,24 +505,6 @@ def build(bld):
+@@ -506,24 +506,6 @@ def build(bld):
  
  
      # Create the build tasks for each of our extension modules.
@@ -109,6 +110,37 @@ index b242902d..5a113143 100644
  
      # Add build rules for each of our ETG generated extension modules
      makeETGRule(bld, 'etg/_core.py',       '_core',      'WX')
+diff --git a/wx/lib/gizmos/dynamicsash.py b/wx/lib/gizmos/dynamicsash.py
+index 03b2aebf..142129de 100644
+--- a/wx/lib/gizmos/dynamicsash.py
++++ b/wx/lib/gizmos/dynamicsash.py
+@@ -16,7 +16,7 @@ reunified through the user interface.
+ """
+ 
+ import wx
+-import wx.siplib
++import sip
+ 
+ #----------------------------------------------------------------------------
+ # Styles
+@@ -945,7 +945,7 @@ class _DynamicSashWindowLeaf(wx.EvtHandler):
+         # we'll just save the object's address instead, and then use that to
+         # fetch the real proxy object when it's needed later.
+         self.m_child = None
+-        self.m_child_ptr = wx.siplib.unwrapinstance(window)
++        self.m_child_ptr = sip.unwrapinstance(window)
+ 
+         # Delay the reparenting until after the AddChild has finished.
+         event = _DynamicSashReparentEvent(self)
+@@ -954,7 +954,7 @@ class _DynamicSashWindowLeaf(wx.EvtHandler):
+ 
+     def _checkPendingChild(self):
+         if hasattr(self, 'm_child_ptr'):
+-            self.m_child = wx.siplib.wrapinstance(self.m_child_ptr, wx.Object)
++            self.m_child = sip.wrapinstance(self.m_child_ptr, wx.Object)
+             del self.m_child_ptr
+ 
+ 
 -- 
 2.14.3
 

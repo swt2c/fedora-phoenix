@@ -16,7 +16,7 @@ specific code.
 
 Name:           python-wx-phoenix
 Version:        4.0.0
-Release:        0.6.%{rc_version}.%{snapshot_version}%{?dist}
+Release:        0.7.%{rc_version}.%{snapshot_version}%{?dist}
 Summary:        %{sum}
 Group:          Development/Languages
 License:        LGPLv2+ and wxWidgets
@@ -125,6 +125,9 @@ popd
 
 
 %changelog
+* Sat Jan 20 2018 Scott Talbert <swt@techie.net> - 4.0.0-0.7.rc1.dev3607+c1a0a4d
+- Update sip unbundling patch for dynamicsash
+
 * Sat Jan 20 2018 Scott Talbert <swt@techie.net> - 4.0.0-0.6.rc1.dev3607+c1a0a4d
 - Update to dev3607+c1a0a4d
 
